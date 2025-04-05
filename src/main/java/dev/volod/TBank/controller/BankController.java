@@ -1,6 +1,7 @@
 package dev.volod.TBank.controller;
 
 import dev.volod.TBank.dto.request.TransactionRequestDTO;
+import dev.volod.TBank.dto.response.TransactionResponseDTO;
 import dev.volod.TBank.service.BankService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +20,21 @@ public class BankController {
     }
 
     @GetMapping("/transfer")
-    public ResponseEntity<TransactionRequestDTO> transfer(@RequestParam BigDecimal amount, @RequestParam String senderId, @RequestParam String receiverId){
-        return new ResponseEntity<>(new TransactionRequestDTO(), HttpStatus.OK);
+    public ResponseEntity<TransactionResponseDTO> transfer(@RequestParam BigDecimal amount, @RequestParam String senderId, @RequestParam String receiverId){
+        TransactionResponseDTO response = bankService.transfer(amount, senderId, receiverId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/deposit")
-    public ResponseEntity<TransactionRequestDTO> deposit(){
-        return new ResponseEntity<>(new TransactionRequestDTO(), HttpStatus.OK);
+    public ResponseEntity<TransactionResponseDTO> deposit(@RequestParam BigDecimal amount, @RequestParam String senderId){
+        TransactionResponseDTO response = bankService.deposit(amount, senderId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/withdraw")
-    public ResponseEntity<TransactionRequestDTO> witdhraw(){
-        return new ResponseEntity<>(new TransactionRequestDTO(), HttpStatus.OK);
+    public ResponseEntity<TransactionResponseDTO> withdraw(@RequestParam BigDecimal amount, @RequestParam String senderId){
+        TransactionResponseDTO response = bankService.withdraw(amount, senderId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

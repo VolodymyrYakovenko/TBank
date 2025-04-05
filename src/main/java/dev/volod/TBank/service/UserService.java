@@ -101,6 +101,8 @@ public class UserService implements UserServiceInterface {
     }
 
     public boolean deposit(String userID, BigDecimal amount){
+        User user = findByIdAdmin(userID);
+        user.setBalance(user.getBalance().add(amount));
         return true;
     }
 }
