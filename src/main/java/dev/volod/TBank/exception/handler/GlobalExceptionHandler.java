@@ -1,8 +1,10 @@
 package dev.volod.TBank.exception.handler;
 
 import dev.volod.TBank.exception.InvalidInputDataException;
+import dev.volod.TBank.exception.TransactionNotFoundException;
 import dev.volod.TBank.exception.UserNotFoundException;
 import dev.volod.TBank.exception.UsernameAlreadyExistsException;
+import jakarta.transaction.TransactionalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +42,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException ex){
         logger.error("Error occurred during execution of User's RESTs: " + ex);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(TransactionalException.class)
+    public ResponseEntity<String> handleTransactionNotFoundException(TransactionNotFoundException ex){
+        logger.error("Error occurred during execution of Transaction's RESTs: " + ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
 //    @ExceptionHandler(MethodArgumentNotValidException.class)

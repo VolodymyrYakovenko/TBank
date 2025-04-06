@@ -17,10 +17,12 @@ public class BankService implements BankServiceInterface {
 
     UserService userService;
 
-    public BankService(UserService userService) {
-        this.userService = userService;
-    }
+    TransactionService transactionService;
 
+    public BankService(UserService userService, TransactionService transactionService) {
+        this.userService = userService;
+        this.transactionService = transactionService;
+    }
     @Override
     public TransactionResponseDTO withdraw(BigDecimal amount, String userId){
         userService.withdraw(userId, amount);
